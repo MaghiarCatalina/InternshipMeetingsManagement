@@ -1,0 +1,11 @@
+entity\User.class
+servlets\ParticipantsServlet.class
+service\UserManager.class
+servlets\UserServlet.class
+service\MeetingManager.class
+servlets\MeetingServlet.class
+service\ParticipantsManager.class
+servlets\AddMeeting.class
+entity\Meeting.class
+entity\Participants.class
+servlets\WelcomeServlet.class
