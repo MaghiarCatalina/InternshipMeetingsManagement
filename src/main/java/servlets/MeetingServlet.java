@@ -15,11 +15,11 @@ import java.util.List;
 @WebServlet("/getMeetings")
 public class MeetingServlet extends HttpServlet {
 
-    MeetingManager meetingManager = new MeetingManager();
-    List<Meeting> meetingList = meetingManager.getMeetingList();
+    private MeetingManager meetingManager = new MeetingManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Meeting> meetingList = meetingManager.getMeetingList();
         req.setAttribute("meetings", meetingList);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/meetings.jsp");
         requestDispatcher.forward(req,resp);

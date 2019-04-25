@@ -24,6 +24,7 @@ public class AddMeeting extends HttpServlet {
     ParticipantsManager participantsManager = new ParticipantsManager();
 
     List<User> userList = userManager.getUserList();
+    List<Participants> participantsList = participantsManager.getParticipantsList();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,6 +46,7 @@ public class AddMeeting extends HttpServlet {
        for(String userId:going){
            Long longUserId = Long.valueOf(userId);
            participantsManager.addParticipant(new Participants(longUserId,idMeeting));
+           //participantsList.add(new Participants(longUserId,idMeeting));
        }
 
        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/welcome.jsp");

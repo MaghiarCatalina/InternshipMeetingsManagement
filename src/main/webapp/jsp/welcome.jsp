@@ -34,7 +34,7 @@
 </form>
 
 <form action="editMeeting" method="get">
-    Edit Meeting Participants
+    Edit Meeting
     <input type="submit" value="Submit">
 </form>
 

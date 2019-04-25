@@ -1,6 +1,9 @@
 package entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Meeting {
 
@@ -14,6 +17,9 @@ public class Meeting {
         this.title = title;
         this.location = location;
         this.time = time;
+    }
+
+    public Meeting() {
     }
 
     public Long getId() {

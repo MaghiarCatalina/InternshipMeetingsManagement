@@ -33,5 +33,10 @@
     <input type="submit" value="Submit">
 </form>
 
+<form action="editMeeting" method="get">
+    Edit Meeting
+    <input type="submit" value="Submit">
+</form>
+
 </body>
 </html>

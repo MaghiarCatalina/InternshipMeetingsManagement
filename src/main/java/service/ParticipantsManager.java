@@ -1,27 +1,90 @@
 package service;
 
+import connection.DataSource;
 import entity.Participants;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipantsManager {
 
-    private static List<Participants> participantsList= new ArrayList<>();
+    Connection con = null;
 
-    public static void setUp() {
-        participantsList.add(new Participants(1111L,1234L));
-        participantsList.add(new Participants(2222L,1234L));
-        participantsList.add(new Participants(333L,1234L));
-        participantsList.add(new Participants(1111L,9876L));
-        participantsList.add(new Participants(6766L,9876L));
+    public void addParticipant(Participants participants) {
+        String SQL_QUERY = "INSERT INTO participants(id_user,id_meeting)" + "VALUES(?,?)";
+        PreparedStatement pst = null;
+        try {
+            con = DataSource.getConnection();
+            pst = con.prepareStatement(SQL_QUERY);
+            pst.setLong(1, participants.getUserId());
+            pst.setLong(2,participants.getMeetingId());
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                pst.close();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    static {
-        setUp();
+    public void deleteParticipant(Participants participants) {
+        String SQL_QUERY = "DELETE FROM participants WHERE id_user= ?";
+        PreparedStatement pst = null;
+        try {
+            con = DataSource.getConnection();
+            pst = con.prepareStatement(SQL_QUERY);
+            pst.setLong(1, participants.getUserId());
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                pst.close();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void addParticipant(Participants participants){participantsList.add(participants);}
+    public List<Participants> getParticipantsList() {
+        String SQL_QUERY = "select * from participants";
+        List<Participants> participantsList = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DataSource.getConnection();
+            pst = con.prepareStatement(SQL_QUERY);
+            rs = pst.executeQuery();
 
-    public static List<Participants> getParticipantsList(){return participantsList;}
+            participantsList = new ArrayList<>();
+            Participants participant;
+            while (rs.next()) {
+                participant = new Participants();
+                participant.setUserId(rs.getLong("id_user"));
+                participant.setMeetingId(rs.getLong("id_meeting"));
+                participantsList.add(participant);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                pst.close();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return participantsList;
+    }
 }

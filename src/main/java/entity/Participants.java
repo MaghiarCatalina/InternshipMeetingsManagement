@@ -9,6 +9,9 @@ public class Participants {
         this.meetingId = meetingId;
     }
 
+    public Participants() {
+    }
+
     public Long getUserId() {
         return userId;
     }
